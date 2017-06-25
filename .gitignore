@@ -1,0 +1,5 @@
+# Ignore build results
+/pkg/
+/src/
+/npm-*.tar.gz
+/npm-*.pkg.tar.xz
