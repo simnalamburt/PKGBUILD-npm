@@ -2,7 +2,7 @@
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 
 pkgname=npm
-pkgver=4.6.1
+pkgver=5.0.3
 pkgrel=1
 pkgdesc='A package manager for javascript'
 arch=('any')
@@ -14,7 +14,7 @@ makedepends=('procps-ng' 'marked-man')
 optdepends=('python2: for node-gyp')
 options=('!emptydirs')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/npm/npm/archive/v$pkgver.tar.gz")
-sha512sums=('2d2a7c22fa5d31bf63fc2e04d4ac2c4ffd0d9d80055ae40348d994968a47eff26897cbc554bb4de900c54959ae8ce6b89295178ad243c1c7a25730d3f194b0db')
+sha512sums=('e873297876fd06a958ea904e4371950a5c4b1597762da6cef3ac0df95a0858a9fede02aadb0f486ed5bf063069e00e11031fba357bdb5ffe891d69e83f6b08fd')
 
 prepare() {
   cd npm-$pkgver
@@ -37,13 +37,8 @@ package() {
   chown -R root "$pkgdir"/usr/lib/node_modules
 
   # Fix wrong symlinks
-  for _dir in man1 man5 man7; do
-    mkdir -p "$pkgdir"/usr/share/man/$_dir
-    cd "$pkgdir"/usr/lib/node_modules/npm/man/$_dir
-    for _file in *; do
-      ln -s /usr/lib/node_modules/npm/man/$_dir/$_file "$pkgdir"/usr/share/man/$_dir/
-    done
-  done
+  rm "$pkgdir/usr/lib/node_modules/npm"
+  cp -r . "$pkgdir/usr/lib/node_modules/npm"
 
   # Provide node-gyp executable
   cp "$pkgdir"/usr/lib/node_modules/npm/bin/node-gyp-bin/node-gyp "$pkgdir"/usr/bin/node-gyp
@@ -53,7 +48,7 @@ package() {
   cd "$pkgdir"/usr/lib/node_modules/$pkgname/node_modules
   for dep in semver; do
     rm -r $dep;
-    node "$srcdir"/npm-$pkgver/cli.js link $dep;
+    node "$srcdir"/npm-$pkgver/bin/npm-cli.js link $dep;
   done
 
   install -Dm644 "$srcdir"/npm-$pkgver/LICENSE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE
