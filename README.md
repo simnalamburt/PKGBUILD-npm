@@ -1,3 +1,11 @@
+> Migrated to [simnalamburt/PKGBUILD](https://github.com/simnalamburt/PKGBUILD/tree/main/npm)
+> ========
+> This repo has been migrated to the https://github.com/simnalamburt/PKGBUILD/tree/main/npm
+
+&nbsp;
+
+&nbsp;
+
 npm 5.1.0-1
 ========
 npm@5 package for Arch Linux.
